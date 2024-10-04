@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+    <button id="listProductsButton">List Products</button>
+    <button id="emptyProductsButton">Empty Products</button>
+
+    <div id="productResults"></div>
+
+    <script>
+        $(document).ready(function() {
+            // When the "List Products" button is clicked
+            $('#listProductsButton').on('click', function() {
+                $.ajax({
+                    url: 'list.php',
+                    method: 'GET',
+                    success: function(response) {
+                        $('#productResults').html(response);  // populate and display the product table
+                    },
+                    error: function(xhr, status, error) {
+                        $('#productResults').html('Error: ' + error);
+                    }
+                });
+            });
+
+            // When the "Empty Products" button is clicked
+            $('#emptyProductsButton').on('click', function() {
+                $.ajax({
+                    url: 'empty.php',
+                    method: 'POST',
+                    success: function(response) {
+                        $('#productResults').html(response);  // empty the product table
+                    },
+                    error: function(xhr, status, error) {
+                        $('#productResults').html('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
